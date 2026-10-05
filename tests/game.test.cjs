@@ -1,5 +1,5 @@
 const assert=require('node:assert/strict');
-const p=require('../docs/game.js');
+const p=require('../game.js');
 const empty=()=>({row:[null,null,null,null],col:[null,null,null,null]});
 const locks=empty(),board=p.words.slice();
 assert.equal(p.group(board,'row',0).name,'Mammals');assert.equal(p.group(board,'col',0).name,'BLACK ___');
@@ -13,7 +13,7 @@ for(const r of perm([0,1,2,3]))for(const c of perm([0,1,2,3])){const b=r.flatMap
 class El {constructor(){this.children=[];this.classList={add(){},remove(){}};this.dataset={};this.style={};}replaceChildren(){this.children=[];}append(x){this.children.push(x)}setAttribute(){}addEventListener(){}focus(){}showModal(){}close(){}scrollIntoView(){}}
 const vm=require('node:vm'),fs=require('node:fs'),els=new Map();const get=id=>{if(!els.has(id))els.set(id,new El());return els.get(id)};
 const document={getElementById:get,querySelector:get,querySelectorAll:()=>[],createElement:()=>new El(),addEventListener(){},body:new El()};let saved;
-const ctx={Puzzle:p,document,localStorage:{getItem:()=>saved,setItem(k,v){saved=v}},setTimeout};vm.createContext(ctx);vm.runInContext(fs.readFileSync(require.resolve('../docs/app.js'),'utf8'),ctx);const run=s=>vm.runInContext(s,ctx),snapshot=()=>JSON.parse(saved);
+const ctx={Puzzle:p,document,localStorage:{getItem:()=>saved,setItem(k,v){saved=v}},setTimeout};vm.createContext(ctx);vm.runInContext(fs.readFileSync(require.resolve('../app.js'),'utf8'),ctx);const run=s=>vm.runInContext(s,ctx),snapshot=()=>JSON.parse(saved);
 run('state.board=Puzzle.words.slice();render();selectLine("row",0)');assert.equal(run('selection.axis'),'row');run('selectLine("row",0)');assert.equal(run('selection'),null);assert(get('submit').disabled);run('selectLine("col",1);selectLine("col",1)');assert.equal(run('selection'),null);run('selectLine("row",0)');get('submit').onclick();assert.equal(snapshot().mistakes,0);assert.equal(snapshot().locks.row[0].name,'Mammals');assert(get('submit').disabled);
 run('swap(0,1)');assert.equal(snapshot().board[0],'LION');run('swap(0,4)');assert.equal(snapshot().board[0],'LION');assert.equal(snapshot().mistakes,0);
 get('replay').onclick();run('state.board=Puzzle.words.slice();render()');for(const axis of ['row','col'])for(let i=0;i<4;i++){run(`selectLine('${axis}',${i})`);get('submit').onclick();}assert.equal(snapshot().status,'won');assert.equal(snapshot().mistakes,0);assert(snapshot().locks.row.every(Boolean));assert(snapshot().locks.col.every(Boolean));assert(run('validState(state)'));
