@@ -12,7 +12,7 @@
 </script>
  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
  <meta name="theme-color" content="#f6f4ed">
- <meta name="description" content="Sixteen words. Four connections across. Four connections down. Arrange the grid and solve both directions with three mistakes allowed.">
+ <meta name="description" content="Sixteen words. Four connections across. Four connections down. Arrange the grid and solve both directions with four mistakes allowed.">
  <title>Cross Connections — a puzzle in two directions</title>
  <link rel="stylesheet" href="style.css">
  <script defer src="game.js"></script><script defer src="app.js"></script>
@@ -24,7 +24,7 @@
   <h1>Make connections.<br><em>In both directions.</em></h1>
   <p class="intro">Sixteen words. Four groups across. Four groups down.<br class="desktop"> Find an arrangement that connects them all.</p>
   <section class="game" aria-label="Word puzzle">
-   <div class="game-top"><span id="instruction">Choose a row or column to check</span><div class="attempts" aria-label="Three mistakes remaining"><span id="tries">3 mistakes left</span><span id="dots" aria-hidden="true"><i></i><i></i><i></i></span></div></div>
+   <div class="game-top"><span id="instruction">Choose a row or column to check</span><div class="attempts" aria-label="Four mistakes remaining"><span id="tries">4 mistakes left</span><span id="dots" aria-hidden="true"><i></i><i></i><i></i><i></i></span></div></div>
    <div class="grid-shell">
     <div class="column-arrows" id="column-arrows" aria-label="Select a column"></div>
     <div class="row-arrows" id="row-arrows" aria-label="Select a row"></div>
@@ -34,9 +34,9 @@
    <div class="actions"><button class="secondary" id="shuffle"><span aria-hidden="true">⇄</span> Shuffle</button><button class="primary" id="submit">Check selection <span aria-hidden="true">↗</span></button></div>
    <div class="end-actions" id="end-actions" hidden><button class="secondary" id="reveal">See the solution</button><button class="primary" id="replay">Play again</button></div>
   </section>
-  <div class="rule-strip"><span><b>01</b> Arrange the words</span><span><b>02</b> Find eight groups</span><span><b>03</b> Three mistakes allowed</span></div>
+  <div class="rule-strip"><span><b>01</b> Arrange the words</span><span><b>02</b> Find eight groups</span><span><b>03</b> Four mistakes allowed</span></div>
   <section class="solution" id="solution" hidden><div class="eyebrow">THE CONNECTIONS</div><h2>One grid. Eight groups.</h2><p>Across: mammals, birds, fish &amp; shellfish, and fruits &amp; vegetables.<br>Down: words that follow BLACK, SEA, SNOW, and ROCK.</p><div class="answer-wrap"><table><thead><tr><th></th><th>BLACK</th><th>SEA</th><th>SNOW</th><th>ROCK</th></tr></thead><tbody><tr><th>Mammals</th><td>Bear</td><td>Lion</td><td>Leopard</td><td>Badger</td></tr><tr><th>Birds</th><td>Swan</td><td>Eagle</td><td>Goose</td><td>Dove</td></tr><tr><th>Seafood</th><td>Cod</td><td>Bass</td><td>Crab</td><td>Lobster</td></tr><tr><th>Produce</th><td>Cherry</td><td>Grape</td><td>Pea</td><td>Melon</td></tr></tbody></table></div><p class="note">A few uncommon connections: a rock badger is a hyrax, rockmelon is cantaloupe, and sea grape is a coastal plant with edible fruit. Black cod is also known as sablefish.</p></section>
  </main>
  <footer>A little lateral thinking. A little vertical thinking.</footer>
- <dialog id="rules"><button class="close" aria-label="Close instructions">×</button><div class="eyebrow">HOW TO PLAY</div><h2>Think across.<br>Think down.</h2><p>Rearrange the sixteen tiles so <strong>each row</strong> forms a category of four, and <strong>each column</strong> forms a different category of four.</p><p>Drag one tile onto another to swap them. You can also tap or click two tiles, or use Tab and Enter.</p><p>Tap a triangle above or beside the grid to select one column or row. Tap the same triangle again to deselect it. <strong>Check selection</strong> checks only those four words. A correct group is marked correct; an incorrect check costs one mistake. Three mistakes ends the game.</p><p>Tiles in a correct row can still move within that row. Tiles in a correct column can still move within that column. A swap must preserve every correct group. Solve and check all eight groups to win.</p><button class="primary" id="got-it">Let's play</button></dialog>
+ <dialog id="rules"><button class="close" aria-label="Close instructions">×</button><div class="eyebrow">HOW TO PLAY</div><h2>Think across.<br>Think down.</h2><p>Rearrange the sixteen tiles so <strong>each row</strong> forms a category of four, and <strong>each column</strong> forms a different category of four.</p><p>Drag one tile onto another to swap them. You can also tap or click two tiles, or use Tab and Enter.</p><p>Tap a triangle above or beside the grid to select one column or row. Tap the same triangle again to deselect it. <strong>Check selection</strong> checks only those four words. A correct group is marked correct; an incorrect check costs one mistake. Four mistakes ends the game.</p><p>Tiles in a correct row can still move within that row. Tiles in a correct column can still move within that column. A swap must preserve every correct group. Solve and check all eight groups to win.</p><button class="primary" id="got-it">Let's play</button></dialog>
 </body></html>

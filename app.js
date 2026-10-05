@@ -1,15 +1,16 @@
 const {words,check,shuffle,lineIndices,group,canSwap,constrainedShuffle}=Puzzle;
 const $=id=>document.getElementById(id);
+const MAX_MISTAKES=4;
 const storageKey='cross-connections-001-lines-v2';
 const fresh=()=>({board:shuffle(words),mistakes:0,status:'playing',orientation:null,locks:{row:[null,null,null,null],col:[null,null,null,null]}});
 let state=fresh();
 function validState(s){
- if(!s||!Array.isArray(s.board)||s.board.length!==16||new Set(s.board).size!==16||!s.board.every(w=>words.includes(w))||!Number.isInteger(s.mistakes)||s.mistakes<0||s.mistakes>3||!['playing','won','lost'].includes(s.status)||![null,'families','crosses'].includes(s.orientation))return false;
+ if(!s||!Array.isArray(s.board)||s.board.length!==16||new Set(s.board).size!==16||!s.board.every(w=>words.includes(w))||!Number.isInteger(s.mistakes)||s.mistakes<0||s.mistakes>MAX_MISTAKES||!['playing','won','lost'].includes(s.status)||![null,'families','crosses'].includes(s.orientation))return false;
  if(!['row','col'].every(axis=>Array.isArray(s.locks?.[axis])&&s.locks[axis].length===4&&s.locks[axis].every((lock,i)=>{if(lock===null)return true;if(!s.orientation)return false;const g=group(s.board,axis,i,s.orientation);return g&&g.type===lock.type&&g.id===lock.id;})))return false;
  const allLocked=[...s.locks.row,...s.locks.col].every(Boolean);
- return s.status==='won'?allLocked&&check(s.board)&&s.mistakes<3:s.status==='lost'?s.mistakes===3:s.mistakes<3&&!allLocked;
+ return s.status==='won'?allLocked&&check(s.board)&&s.mistakes<MAX_MISTAKES:s.status==='lost'?s.mistakes===MAX_MISTAKES:s.mistakes<MAX_MISTAKES&&!allLocked;
 }
-try{const saved=JSON.parse(localStorage.getItem(storageKey));if(validState(saved))state=saved;}catch{}
+try{const saved=JSON.parse(localStorage.getItem(storageKey));if(saved?.status==='lost'&&saved.mistakes===3)saved.status='playing';if(validState(saved))state=saved;}catch{}
 let selectedTile=null,selection=null,drag=null,suppressClick=false;
 function save(){try{localStorage.setItem(storageKey,JSON.stringify(state));}catch{}}
 function message(text,kind=''){const f=$('feedback');f.textContent=text;f.className='feedback '+kind;}
@@ -23,12 +24,12 @@ function render(){
  state.board.forEach((word,i)=>{const b=document.createElement('button');const locked=lockAt('row',Math.floor(i/4))||lockAt('col',i%4);b.className='tile'+(selectedTile===i?' selected':'')+(locked?' grouped':'')+(state.status==='won'?' solved':'');b.textContent=word;b.dataset.index=i;b.type='button';b.disabled=state.status!=='playing';b.setAttribute('aria-label',`${word}, row ${Math.floor(i/4)+1}, column ${i%4+1}${locked?', in a correct group':''}`);b.setAttribute('aria-pressed',String(selectedTile===i));b.addEventListener('click',()=>selectTile(i));b.addEventListener('pointerdown',e=>startDrag(e,i));board.append(b);});
  renderArrows('row');renderArrows('col');drawOutlines();
  const count=[...state.locks.row,...state.locks.col].filter(Boolean).length;
- $('tries').textContent=state.status==='won'?'Solved':`${3-state.mistakes} ${3-state.mistakes===1?'mistake':'mistakes'} left`;
- $('dots').innerHTML=[0,1,2].map(i=>`<i class="${i<state.mistakes?'used':''}"></i>`).join('');
- document.querySelector('.attempts').setAttribute('aria-label',`${3-state.mistakes} mistakes remaining`);
+ $('tries').textContent=state.status==='won'?'Solved':`${MAX_MISTAKES-state.mistakes} ${MAX_MISTAKES-state.mistakes===1?'mistake':'mistakes'} left`;
+ $('dots').innerHTML=Array.from({length:MAX_MISTAKES},(_,i)=>i).map(i=>`<i class="${i<state.mistakes?'used':''}"></i>`).join('');
+ document.querySelector('.attempts').setAttribute('aria-label',`${MAX_MISTAKES-state.mistakes} mistakes remaining`);
  $('submit').disabled=state.status!=='playing'||!selection||!!lockAt(selection.axis,selection.index);
  document.querySelector('.actions').hidden=state.status!=='playing';$('end-actions').hidden=state.status==='playing';
- $('instruction').textContent=state.status==='playing'?`${count} of 8 groups correct`:state.status==='won'?'Eight connections. Beautifully aligned.':'Three mistakes complete';
+ $('instruction').textContent=state.status==='playing'?`${count} of 8 groups correct`:state.status==='won'?'Eight connections. Beautifully aligned.':'Four mistakes complete';
  $('shuffle').disabled=state.status!=='playing'||!state.board.some((_,a)=>state.board.some((_,b)=>canSwap(state.board,a,b,state.locks)));
  if(state.status==='won')message('You did it! All eight groups are correct.','success');
  if(state.status==='lost')message('Out of mistakes. Explore the solution, or give it another go.','error');
@@ -47,7 +48,7 @@ $('submit').onclick=()=>{
  if(state.status!=='playing'||!selection||lockAt(selection.axis,selection.index))return;
  const {axis,index}=selection;const g=group(state.board,axis,index,state.orientation);selectedTile=null;
  if(g){if(!state.orientation)state.orientation=axis==='row'?g.type:(g.type==='families'?'crosses':'families');state.locks[axis][index]=g;if([...state.locks.row,...state.locks.col].every(Boolean)&&check(state.board))state.status='won';render();if(state.status==='playing')message(`${g.name} — ${axis==='row'?'row':'column'} is correct!`,'success');}
- else{state.mistakes++;if(state.mistakes===3)state.status='lost';render();if(state.status==='playing')message(`Not a matching group. ${3-state.mistakes} ${3-state.mistakes===1?'mistake':'mistakes'} remaining.`,'error');$('board').classList.remove('shake');void $('board').offsetWidth;$('board').classList.add('shake');}
+ else{state.mistakes++;if(state.mistakes===MAX_MISTAKES)state.status='lost';render();if(state.status==='playing')message(`Not a matching group. ${MAX_MISTAKES-state.mistakes} ${MAX_MISTAKES-state.mistakes===1?'mistake':'mistakes'} remaining.`,'error');$('board').classList.remove('shake');void $('board').offsetWidth;$('board').classList.add('shake');}
 };
 $('reveal').onclick=()=>{$('solution').hidden=false;$('reveal').hidden=true;$('solution').scrollIntoView({behavior:'smooth',block:'start'});};
 $('replay').onclick=()=>{state=fresh();selectedTile=null;selection=null;$('solution').hidden=true;$('reveal').hidden=false;render();message('Tap a triangle to select a row or column.');};
