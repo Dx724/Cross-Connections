@@ -1,0 +1,140 @@
+[
+  {
+    "id": "001",
+    "number": 1,
+    "published": "2026-10-04",
+    "solution": [
+      [
+        "BEAR",
+        "LION",
+        "LEOPARD",
+        "BADGER"
+      ],
+      [
+        "SWAN",
+        "EAGLE",
+        "GOOSE",
+        "DOVE"
+      ],
+      [
+        "COD",
+        "BASS",
+        "CRAB",
+        "LOBSTER"
+      ],
+      [
+        "CHERRY",
+        "GRAPE",
+        "PEA",
+        "MELON"
+      ]
+    ],
+    "names": {
+      "families": [
+        "Mammals",
+        "Birds",
+        "Fish & shellfish",
+        "Fruits & vegetables"
+      ],
+      "crosses": [
+        "BLACK ___",
+        "SEA ___",
+        "SNOW ___",
+        "ROCK ___"
+      ]
+    },
+    "note": "A few uncommon connections: a rock badger is a hyrax, rockmelon is cantaloupe, and sea grape is a coastal plant with edible fruit. Black cod is also known as sablefish."
+  },
+  {
+    "id": "002",
+    "number": 2,
+    "published": "2026-10-14",
+    "solution": [
+      [
+        "ROWAN",
+        "PALM",
+        "PINE",
+        "OLIVE"
+      ],
+      [
+        "JAY",
+        "TIT",
+        "SWALLOW",
+        "TEAL"
+      ],
+      [
+        "RAY",
+        "SOLE",
+        "SMELT",
+        "SALMON"
+      ],
+      [
+        "LILY",
+        "IRIS",
+        "ROSE",
+        "VIOLET"
+      ]
+    ],
+    "names": {
+      "families": [
+        "Trees",
+        "Birds",
+        "Fish",
+        "Flowers"
+      ],
+      "crosses": [
+        "Given names",
+        "Body parts",
+        "Verbs",
+        "Colors"
+      ]
+    },
+    "note": "A new puzzle. Find all eight connections."
+  },
+  {
+    "id": "004",
+    "number": 4,
+    "published": "2026-10-14",
+    "solution": [
+      [
+        "LIP",
+        "HEAD",
+        "EYE",
+        "SHOULDER"
+      ],
+      [
+        "CARROT",
+        "CHARCUTERIE",
+        "MATZO",
+        "TEA"
+      ],
+      [
+        "GLUE",
+        "SKATE",
+        "DODGE",
+        "GRAB"
+      ],
+      [
+        "DRUM",
+        "KEY",
+        "DISCO",
+        "GIG"
+      ]
+    ],
+    "names": {
+      "families": [
+        "Body parts",
+        "Foods and drinks",
+        "Verbs",
+        "Music terms"
+      ],
+      "crosses": [
+        "___STICK",
+        "___BOARD",
+        "___BALL",
+        "___BAG"
+      ]
+    },
+    "note": "A new puzzle. Find all eight connections."
+  }
+]
